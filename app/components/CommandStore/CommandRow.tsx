@@ -26,6 +26,31 @@ export const CommandRow = ({ cmd }: CommandRowProps) => {
   const editCommandRef = useRef<HTMLInputElement>(null);
   const editTagRef = useRef<HTMLInputElement>(null);
   const editRowRef = useRef<HTMLTableRowElement>(null);
+  const wasEditing = useRef(false);
+
+  const isEditing = editingCommand?.id === cmd.id;
+
+  const saveEdit = () => {
+    if (editingCommand) {
+      setCommands(commands.map(command => 
+        command.id === editingCommand.id ? {
+          ...editingCommand,
+          tags: editingCommand.tags || []
+        } : command
+      ));
+      setEditingCommand(null);
+      setEditingTag('');
+      setLastTagEnterTime(0);
+      setEditingField(null);
+    }
+  };
+
+  useEffect(() => {
+    if (wasEditing.current && !isEditing) {
+      saveEdit();
+    }
+    wasEditing.current = isEditing;
+  }, [isEditing, saveEdit]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -60,22 +85,7 @@ export const CommandRow = ({ cmd }: CommandRowProps) => {
     }
   };
 
-  const saveEdit = () => {
-    if (editingCommand) {
-      setCommands(commands.map(command => 
-        command.id === editingCommand.id ? {
-          ...editingCommand,
-          tags: editingCommand.tags || []
-        } : command
-      ));
-      setEditingCommand(null);
-      setEditingTag('');
-      setLastTagEnterTime(0);
-      setEditingField(null);
-    }
-  };
-
-  const handleEditCommandKeyDown = (e: React.KeyboardEvent) => {
+  const handleEditCommandKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       editTagRef.current?.focus();
@@ -114,8 +124,6 @@ export const CommandRow = ({ cmd }: CommandRowProps) => {
     setCommands(commands.filter(command => command.id !== id));
   };
 
-  const isEditing = editingCommand?.id === cmd.id;
-
   return (
     <tr
       ref={isEditing ? editRowRef : null}
@@ -134,7 +142,7 @@ export const CommandRow = ({ cmd }: CommandRowProps) => {
             type="text"
             value={editingCommand.command}
             onChange={(e) => handleEditChange('command', e.target.value)}
-            onKeyDown={handleEditCommandKeyDown}
+            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleEditCommandKeyDown(e)}
             onFocus={() => setEditingField('command')}
             className={`w-full p-2 border-b-2 focus:outline-none command-input text-gray-900 ${
               editingField === 'command' ? 'border-[#FFD700] bg-white' : 'border-transparent'
