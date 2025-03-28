@@ -53,10 +53,21 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://command-store.dev",
   },
-  icons: [
-    { rel: 'icon', url: '/logo-dark.png' },
-    { rel: 'apple-touch-icon', url: '/logo-dark.png' },
-  ],
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      {
+        rel: 'manifest',
+        url: '/site.webmanifest',
+      },
+    ],
+  },
   viewport: {
     width: 'device-width',
     initialScale: 1,
@@ -73,8 +84,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/logo-dark.png" />
-        <link rel="apple-touch-icon" href="/logo-dark.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
