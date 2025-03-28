@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Edit2, Trash2, X } from 'lucide-react';
 import { useCommandContext } from './CommandContext';
 import { Command } from './types';
@@ -30,7 +30,7 @@ export const CommandRow = ({ cmd }: CommandRowProps) => {
 
   const isEditing = editingCommand?.id === cmd.id;
 
-  const saveEdit = () => {
+  const saveEdit = useCallback(() => {
     if (editingCommand) {
       setCommands(commands.map(command => 
         command.id === editingCommand.id ? {
@@ -43,7 +43,7 @@ export const CommandRow = ({ cmd }: CommandRowProps) => {
       setLastTagEnterTime(0);
       setEditingField(null);
     }
-  };
+  }, [editingCommand, commands, setCommands]);
 
   useEffect(() => {
     if (wasEditing.current && !isEditing) {
@@ -63,7 +63,7 @@ export const CommandRow = ({ cmd }: CommandRowProps) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [editingCommand]);
+  }, [editingCommand, saveEdit]);
 
   const startEditing = (command: Command, field: 'command' | 'tags', e: React.MouseEvent) => {
     e.stopPropagation();
@@ -76,7 +76,7 @@ export const CommandRow = ({ cmd }: CommandRowProps) => {
     }, 50);
   };
 
-  const handleEditChange = (field: keyof Command, value: any) => {
+  const handleEditChange = (field: keyof Command, value: string | string[]) => {
     if (editingCommand) {
       setEditingCommand({
         ...editingCommand,

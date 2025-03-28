@@ -1,17 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import ReactGA from 'react-ga4';
 
-export default function GoogleAnalytics() {
+// Component that uses useSearchParams
+function AnalyticsTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    // Initialize GA4 with your measurement ID
-    ReactGA.initialize('G-9D0C7RYSL3');
-  }, []);
 
   useEffect(() => {
     const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
@@ -24,4 +20,17 @@ export default function GoogleAnalytics() {
   }, [pathname, searchParams]);
 
   return null;
+}
+
+export default function GoogleAnalytics() {
+  useEffect(() => {
+    // Initialize GA4 with your measurement ID
+    ReactGA.initialize('G-9D0C7RYSL3');
+  }, []);
+
+  return (
+    <Suspense fallback={null}>
+      <AnalyticsTracker />
+    </Suspense>
+  );
 } 
