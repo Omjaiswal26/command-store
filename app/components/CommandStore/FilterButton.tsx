@@ -3,7 +3,7 @@ import { Filter } from "lucide-react";
 import { useCommandContext } from './CommandContext';
 
 export const FilterButton = () => {
-  const { activeFilters, setActiveFilters } = useCommandContext();
+  const { setActiveFilters } = useCommandContext();
   const [isExpanded, setIsExpanded] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
