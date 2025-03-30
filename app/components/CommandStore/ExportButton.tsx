@@ -32,7 +32,7 @@ export const ExportButton = () => {
     <div>
       <button
         onClick={handleExport}
-        className="text-gray-400 hover:text-[#FFD700] p-2"
+        className="text-purple-500 hover:text-purple-600 p-2"
         title="Export commands"
       >
         <Upload size={20} />

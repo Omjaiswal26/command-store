@@ -83,7 +83,7 @@ export const ImportButton = () => {
       />
       <button
         onClick={handleImport}
-        className="text-gray-400 hover:text-[#FFD700] p-2"
+        className="text-emerald-500 hover:text-emerald-600 p-2"
         title="Import commands"
       >
         <Download size={20} />

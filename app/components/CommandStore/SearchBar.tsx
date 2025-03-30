@@ -56,7 +56,7 @@ export const SearchBar = () => {
           }`}
         />
         <Search
-          className="absolute left-2 top-2.5 text-gray-400"
+          className="absolute left-2 top-2.5 text-amber-500"
           size={20}
         />
       </div>
@@ -95,7 +95,7 @@ export const SearchBar = () => {
         )}
         <button
           onClick={() => setShowDeleteConfirm(true)}
-          className="text-gray-400 hover:text-red-500 p-2"
+          className="text-red-400 hover:text-red-500 p-2"
           title="Delete all commands"
         >
           <Trash2 size={20} />
