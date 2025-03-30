@@ -83,9 +83,15 @@ export const CommandProvider: React.FC<{ children: ReactNode }> = ({ children })
   const filteredCommands = commands.filter((cmd) => {
     const searchTermLower = searchTerm.toLowerCase();
     const matchesSearch = cmd.command.toLowerCase().includes(searchTermLower);
+    
     const matchesTags =
       activeFilters.length === 0 ||
-      activeFilters.every((filter) => cmd.tags.includes(filter));
+      activeFilters.every((filter) => {
+        // Use partial matching for tags
+        const filterLower = filter.toLowerCase();
+        return cmd.tags.some(tag => tag.toLowerCase().includes(filterLower));
+      });
+    
     return matchesSearch && matchesTags;
   });
 

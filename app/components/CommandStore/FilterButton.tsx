@@ -11,8 +11,13 @@ export const FilterButton = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setActiveFilters(tags);
-  }, [tags, setActiveFilters]);
+    // Include current input value in filters if it's not empty
+    const activeFilters = inputValue.trim() 
+      ? [...tags, inputValue.trim()] 
+      : tags;
+    
+    setActiveFilters(activeFilters);
+  }, [tags, inputValue, setActiveFilters]);
 
   const addTag = (tag: string) => {
     const trimmedTag = tag.trim();
