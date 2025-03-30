@@ -5,11 +5,10 @@ import { Search, X, Trash2, AlertTriangle } from 'lucide-react';
 import { useCommandContext } from './CommandContext';
 import { ImportButton } from './ImportButton';
 import { ExportButton } from './ExportButton';
+import { FilterButton } from './FilterButton';
 
 export const SearchBar = () => {
   const { 
-    activeFilters, 
-    toggleFilter, 
     searchTerm, 
     setSearchTerm, 
     setCommands 
@@ -25,20 +24,8 @@ export const SearchBar = () => {
 
   return (
     <div className="mb-8 flex items-center justify-end gap-4">
-      {activeFilters.length > 0 && (
-        <div className="flex flex-wrap gap-2 flex-1 justify-end">
-          {activeFilters.map((filter) => (
-            <span
-              key={filter}
-              onClick={() => toggleFilter(filter)}
-              className="bg-[#FFD700] text-white px-3 py-1 rounded-full text-sm cursor-pointer hover:bg-[#FFC700] transition-colors flex items-center gap-1"
-            >
-              {filter}
-              <X size={14} />
-            </span>
-          ))}
-        </div>
-      )}
+      <FilterButton />
+      
       <div
         className={`relative transition-all duration-300 ${
           isSearchExpanded ? 'w-64' : 'w-8'
