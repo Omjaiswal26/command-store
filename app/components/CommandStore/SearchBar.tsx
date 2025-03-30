@@ -51,7 +51,7 @@ export const SearchBar = () => {
           placeholder="Search commands..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className={`pl-8 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-[#FFD700] transition-all duration-300 search-input text-gray-900 ${
+          className={`pl-8 pr-4 py-2 rounded-full border border-amber-500 focus:outline-none focus:border-[#FFD700] transition-all duration-300 search-input text-gray-900 ${
             isSearchExpanded ? 'w-full opacity-100' : 'w-8 opacity-0'
           }`}
         />
