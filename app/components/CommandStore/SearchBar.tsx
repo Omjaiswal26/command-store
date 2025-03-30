@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Search, X, Trash2, AlertTriangle } from 'lucide-react';
 import { useCommandContext } from './CommandContext';
+import { ImportButton } from './ImportButton';
+import { ExportButton } from './ExportButton';
 
 export const SearchBar = () => {
   const { 
@@ -58,6 +60,11 @@ export const SearchBar = () => {
           size={20}
         />
       </div>
+      
+      {/* Import/Export buttons */}
+      <ImportButton />
+      <ExportButton />
+      
       <div className="relative">
         {showDeleteConfirm && (
           <div
